@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Tiny {
+namespace TinyHttp {
 	/// <summary>
 	/// Represents the class providing extensions for the HttpWebResponse class.
 	/// </summary>

@@ -6,7 +6,7 @@
 using System.Net;
 using System.Reflection;
 
-namespace Tiny {
+namespace TinyHttp {
 	/// <summary>
 	/// Represents the class providing extensions for the HttpWebRequest class.
 	/// </summary>
