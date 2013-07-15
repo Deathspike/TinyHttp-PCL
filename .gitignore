@@ -1,0 +1,13 @@
+*\Debug
+*\Release
+*\bin
+*\obj
+
+*.config
+*.exe
+*.dll
+*.manifest
+*.pdb
+*.suo
+*.user
+*.xml

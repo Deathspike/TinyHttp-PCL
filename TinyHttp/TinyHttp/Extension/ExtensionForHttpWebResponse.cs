@@ -1,0 +1,89 @@
+﻿// ======================================================================
+// This source code form is subject to the terms of the Mozilla Public
+// License, version 2.0. If a copy of the MPL was not distributed with 
+// this file, you can obtain one at http://mozilla.org/MPL/2.0/.
+// ======================================================================
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+
+namespace Tiny {
+	/// <summary>
+	/// Represents the class providing extensions for the HttpWebResponse class.
+	/// </summary>
+	public static class ExtensionForHttpWebResponse {
+		#region Methods
+		/// <summary>
+		/// Retrieve the response as binary.
+		/// </summary>
+		/// <param name="Response">The response.</param>
+		public static byte[] AsBinary(this HttpWebResponse Response) {
+			// Get the stream that is used to read the response from the server.
+			using (Stream Stream = Response.AsUncompressed()) {
+				// Initialize a new instance of the StreamReader class.
+				using (BinaryReader BinaryReader = new BinaryReader(Stream)) {
+					// Invoke the handler indicating the request is completed.
+					return BinaryReader.ReadBytes((int) Response.ContentLength);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Retrieve the response as string.
+		/// </summary>
+		/// <param name="Response">The response.</param>
+		public static string AsString(this HttpWebResponse Response) {
+			// Get the stream that is used to read the response from the server.
+			using (Stream Stream = Response.AsUncompressed()) {
+				// Initialize the content type pair.
+				string[] ContentTypePair = Response.ContentType.Split(new[] { ';' });
+				// Initialize the encoding.
+				Encoding Encoding = Encoding.GetEncoding("ISO-8859-1");
+				// Check if the content type pair is valid.
+				if (ContentTypePair.Length == 2) {
+					// Retrieve the character set pair.
+					string[] CharacterSetPair = ContentTypePair[1].Split(new[] { '=' });
+					// Check if the character set pair is valid.
+					if (CharacterSetPair.Length == 2 && CharacterSetPair[0].TrimStart().Equals("charset")) {
+						// Attempt the following code.
+						try {
+							// Set the character set of the input stream.
+							Encoding = Encoding.GetEncoding(CharacterSetPair[1]);
+						} catch {
+							// Check if the character set is a misspelled UTF-8.
+							if (CharacterSetPair[1].Equals("utf8")) {
+								// Set the character set of the input stream.
+								Encoding = Encoding.UTF8;
+							}
+						}
+					}
+				}
+				// Initialize a new instance of the StreamReader class.
+				using (StreamReader StreamReader = new StreamReader(Stream, Encoding)) {
+					// Invoke the handler indicating the request is completed.
+					return StreamReader.ReadToEnd();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Retrieve the response stream as an uncompressed stream.
+		/// </summary>
+		/// <param name="Response">The response.</param>
+		public static Stream AsUncompressed(this HttpWebResponse Response) {
+			// Get the stream that is used to read the response from the server.
+			Stream Stream = Response.GetResponseStream();
+			// Check if the response stream is a compressed stream.
+			if (Response.SupportsHeaders && Response.Headers.AllKeys.Contains("Content-Encoding")) {
+				// Initialize the appropriate decompression stream and return it.
+				return Response.Headers["Content-Encoding"].Equals("gzip") ? new GZipInputStream(Stream) : new InflaterInputStream(Stream);
+			}
+			// Return the stream.
+			return Stream;
+		}
+		#endregion
+	}
+}
