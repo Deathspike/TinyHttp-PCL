@@ -28,4 +28,5 @@ Manipulating a request with middleware...
 		Console.WriteLine(Response.AsString());
 	}, (Request, Next) => {
 		Request.Set("X-Requested-By", "TinyHTTP");
+		Next();
 	});
