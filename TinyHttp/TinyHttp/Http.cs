@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 
 namespace TinyHttp {
 	/// <summary>
@@ -88,8 +89,8 @@ namespace TinyHttp {
 							// Request a HTTP resource.
 							Get(Address, Callback, Middleware);
 						} else {
-							// Throw the exception.
-							throw e;
+							// Invoke the callback.
+							Callback(null);
 						}
 					}
 				}, Request);
