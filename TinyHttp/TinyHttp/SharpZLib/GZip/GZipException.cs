@@ -47,7 +47,7 @@ namespace ICSharpCode.SharpZipLib.GZip
 #if !NETCF_1_0 && !NETCF_2_0
 	[Serializable]
 #endif	
-	public class GZipException : SharpZipBaseException
+	internal class GZipException : SharpZipBaseException
 	{
 #if !NETCF_1_0 && !NETCF_2_0
 		/// <summary>

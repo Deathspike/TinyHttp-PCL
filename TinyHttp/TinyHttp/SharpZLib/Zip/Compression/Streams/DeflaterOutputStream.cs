@@ -57,7 +57,7 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 	/// written to it.  It uses a Deflater to perform actual deflating.<br/>
 	/// Authors of the original java version : Tom Tromey, Jochen Hoenicke 
 	/// </summary>
-	public class DeflaterOutputStream : Stream
+	internal class DeflaterOutputStream : Stream
 	{
 		#region Constructors
 		/// <summary>
@@ -184,7 +184,6 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 		
 		/// <summary>
 		/// Get/set flag indicating ownership of the underlying stream.
-		/// When the flag is true <see cref="Close"></see> will close the underlying stream also.
 		/// </summary>
 		public bool IsStreamOwner
 		{
@@ -590,9 +589,7 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 		/// Base stream the deflater depends on.
 		/// </summary>
 		protected Stream baseOutputStream_;
-
-		bool isClosed_;
-		
+				
 		bool isStreamOwner_ = true;
 		#endregion
 

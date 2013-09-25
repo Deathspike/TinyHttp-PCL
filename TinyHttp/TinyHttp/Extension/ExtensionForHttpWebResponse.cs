@@ -21,6 +21,11 @@ namespace TinyHttp {
 		/// </summary>
 		/// <param name="Response">The response.</param>
 		public static byte[] AsBinary(this HttpWebResponse Response) {
+			// Check if the response is invalid.
+			if (Response == null) {
+				// Return null.
+				return null;
+			}
 			// Get the stream that is used to read the response from the server.
 			using (Stream Stream = Response.AsUncompressed()) {
 				// Initialize a new instance of the StreamReader class.
@@ -36,6 +41,11 @@ namespace TinyHttp {
 		/// </summary>
 		/// <param name="Response">The response.</param>
 		public static string AsString(this HttpWebResponse Response) {
+			// Check if the response is invalid.
+			if (Response == null) {
+				// Return null.
+				return null;
+			}
 			// Get the stream that is used to read the response from the server.
 			using (Stream Stream = Response.AsUncompressed()) {
 				// Initialize the content type pair.
@@ -74,15 +84,18 @@ namespace TinyHttp {
 		/// </summary>
 		/// <param name="Response">The response.</param>
 		public static Stream AsUncompressed(this HttpWebResponse Response) {
-			// Get the stream that is used to read the response from the server.
-			Stream Stream = Response.GetResponseStream();
+			// Check if the response is invalid.
+			if (Response == null) {
+				// Return null.
+				return null;
+			}
 			// Check if the response stream is a compressed stream.
 			if (Response.SupportsHeaders && Response.Headers.AllKeys.Contains("Content-Encoding")) {
-				// Initialize the appropriate decompression stream and return it.
-				return Response.Headers["Content-Encoding"].Equals("gzip") ? new GZipInputStream(Stream) : new InflaterInputStream(Stream);
+				// Return the appropriate decompression response stream.
+				return Response.Headers["Content-Encoding"].Equals("gzip") ? new GZipInputStream(Response.GetResponseStream()) : new InflaterInputStream(Response.GetResponseStream());
 			}
-			// Return the stream.
-			return Stream;
+			// Return the response stream.
+			return Response.GetResponseStream();
 		}
 		#endregion
 	}

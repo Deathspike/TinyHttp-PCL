@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
 
 namespace TinyHttp {
 	/// <summary>
@@ -31,7 +30,7 @@ namespace TinyHttp {
 		}
 
 		/// <summary>
-		/// Request a HTTP resource using a Delete.
+		/// Request a HTTP resource using a DELETE.
 		/// </summary>
 		/// <param name="Address">The address.</param>
 		/// <param name="Callback">The callback.</param>
@@ -42,10 +41,7 @@ namespace TinyHttp {
 				// Set the method for the request.
 				Request.Method = "DELETE";
 				// Invoke the middleware.
-				Middleware(Request, () => {
-					// Continue.
-					Next();
-				});
+				Middleware(Request, Next);
 			});
 		}
 
@@ -84,14 +80,8 @@ namespace TinyHttp {
 						// End an asynchronous request to an internet resource.
 						Callback((HttpWebResponse) Request.EndGetResponse(AsyncResult));
 					} catch (WebException e) {
-						// Check if the request was cancelled.
-						if (e.Status == WebExceptionStatus.RequestCanceled) {
-							// Request a HTTP resource.
-							Get(Address, Callback, Middleware);
-						} else {
-							// Invoke the callback.
-							Callback(null);
-						}
+						// Invoke the callback.
+						Callback((HttpWebResponse) e.Response);
 					}
 				}, Request);
 			});
@@ -170,10 +160,7 @@ namespace TinyHttp {
 				// Set the method for the request.
 				Request.Method = "PUT";
 				// Invoke the middleware.
-				Middleware(Request, () => {
-					// Continue.
-					Next();
-				});
+				Middleware(Request, Next);
 			});
 		}
 		#endregion

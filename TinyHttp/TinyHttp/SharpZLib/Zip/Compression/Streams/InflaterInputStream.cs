@@ -56,7 +56,7 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 	/// <remarks>
 	/// The buffer supports decryption of incoming data.
 	/// </remarks>
-	public class InflaterInputBuffer
+	internal class InflaterInputBuffer
 	{
 		#region Constructors
 		/// <summary>
@@ -351,7 +351,7 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 	///
 	/// Author of the original java version : John Leuner.
 	/// </summary>
-	public class InflaterInputStream : Stream
+	internal class InflaterInputStream : Stream
 	{
 		#region Constructors
 		/// <summary>
@@ -418,7 +418,6 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 
 		/// <summary>
 		/// Get/set flag indicating ownership of underlying stream.
-		/// When the flag is true <see cref="Close"/> will close the underlying stream also.
 		/// </summary>
 		/// <remarks>
 		/// The default value is true.
@@ -713,16 +712,6 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 		/// Base stream the inflater reads from.
 		/// </summary>
 		private Stream baseInputStream;
-		
-		/// <summary>
-		/// The compressed size
-		/// </summary>
-		protected long csize;
-
-		/// <summary>
-		/// Flag indicating wether this instance has been closed or not.
-		/// </summary>
-		bool isClosed;
 
 		/// <summary>
 		/// Flag indicating wether this instance is designated the stream owner.

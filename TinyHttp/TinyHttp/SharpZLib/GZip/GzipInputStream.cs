@@ -77,7 +77,7 @@ namespace ICSharpCode.SharpZipLib.GZip
 	/// }	
 	/// </code>
 	/// </example>
-	public class GZipInputStream : InflaterInputStream
+	internal class GZipInputStream : InflaterInputStream
 	{
 		#region Instance Fields
 		/// <summary>

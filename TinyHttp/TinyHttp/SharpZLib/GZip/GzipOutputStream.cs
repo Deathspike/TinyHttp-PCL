@@ -74,7 +74,7 @@ namespace ICSharpCode.SharpZipLib.GZip
 	/// }	
 	/// </code>
 	/// </example>
-	public class GZipOutputStream : DeflaterOutputStream
+	internal class GZipOutputStream : DeflaterOutputStream
 	{
         enum OutputState
         {

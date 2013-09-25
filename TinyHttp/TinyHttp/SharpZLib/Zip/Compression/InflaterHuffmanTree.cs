@@ -45,7 +45,7 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 	/// <summary>
 	/// Huffman tree used for inflation
 	/// </summary>
-	public class InflaterHuffmanTree
+	internal class InflaterHuffmanTree
 	{
 		#region Constants
 		const int MAX_BITLEN = 15;

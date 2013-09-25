@@ -41,10 +41,10 @@
     <Compile Include="Extension\ExtensionForHttpWebRequest.cs" />
     <Compile Include="Extension\ExtensionForHttpWebResponse.cs" />
     <Compile Include="Http.cs" />
+    <Compile Include="HttpSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharpZLib\Checksums\Adler32.cs" />
     <Compile Include="SharpZLib\Checksums\CRC32.cs" />
-    <Compile Include="SharpZLib\Checksums\IChecksum.cs" />
     <Compile Include="SharpZLib\GZip\GZIPConstants.cs" />
     <Compile Include="SharpZLib\GZip\GZipException.cs" />
     <Compile Include="SharpZLib\GZip\GzipInputStream.cs" />

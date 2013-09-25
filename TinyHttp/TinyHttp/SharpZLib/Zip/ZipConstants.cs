@@ -61,7 +61,6 @@ namespace ICSharpCode.SharpZipLib.Zip
 		/// <summary>
 		/// Zip64 will not be forced on entries during processing.
 		/// </summary>
-		/// <remarks>An entry can have this overridden if required <see cref="ZipEntry.ForceZip64"></see></remarks>
 		Off,
 		/// <summary>
 		/// Zip64 should always be used.
@@ -256,7 +255,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 		/// </summary>
 		/// <remarks>
 		/// This is also the Zip version for the library when comparing against the version required to extract
-		/// for an entry.  See <see cref="ZipEntry.CanDecompress"/>.
+		/// for an entry.
 		/// </remarks>
 		public const int VersionMadeBy = 51; // was 45 before AES
 		
@@ -265,7 +264,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 		/// </summary>
 		/// <remarks>
 		/// This is also the Zip version for the library when comparing against the version required to extract
-		/// for an entry.  See <see cref="ZipInputStream.CanDecompressEntry">ZipInputStream.CanDecompressEntry</see>.
+		/// for an entry.
 		/// </remarks>
 		[Obsolete("Use VersionMadeBy instead")]
 		public const int VERSION_MADE_BY = 51;
