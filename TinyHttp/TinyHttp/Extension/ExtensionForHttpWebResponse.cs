@@ -28,12 +28,19 @@ namespace TinyHttp {
 			}
 			// Get the stream that is used to read the response from the server.
 			using (Stream Stream = Response.AsUncompressed()) {
-				// Initialize a new instance of the StreamReader class.
-				using (BinaryReader BinaryReader = new BinaryReader(Stream)) {
+				// Initialize a new instance of the MemoryStream class.
+				using (MemoryStream MemoryStream = new MemoryStream()) {
 					// Initialize the buffer.
-					byte[] Buffer = BinaryReader.ReadBytes(int.MaxValue);
-					// Return the buffer.
-					return Buffer.Length == 0 ? null : Buffer;
+					byte[] Buffer = new byte[4096];
+					// Initialize the counter.
+					int Count;
+					// Read available bytes from the stream into the buffer.
+					while ((Count = Stream.Read(Buffer, 0, Buffer.Length)) != 0) {
+						// Write to read bytes into the memory stream.
+						MemoryStream.Write(Buffer, 0, Count);
+					}
+					// Return the memory stream as a byte array.
+					return MemoryStream.Position != 0 ? MemoryStream.ToArray() : null;
 				}
 			}
 		}
