@@ -22,7 +22,7 @@ namespace TinyHttp {
 		/// <param name="Response">The response.</param>
 		public static byte[] AsBinary(this HttpWebResponse Response) {
 			// Check if the response is invalid.
-			if (Response == null) {
+			if (Response == null || Response.ContentLength < 0) {
 				// Return null.
 				return null;
 			}
@@ -42,7 +42,7 @@ namespace TinyHttp {
 		/// <param name="Response">The response.</param>
 		public static string AsString(this HttpWebResponse Response) {
 			// Check if the response is invalid.
-			if (Response == null) {
+			if (Response == null || Response.ContentLength < 0) {
 				// Return null.
 				return null;
 			}
@@ -85,7 +85,7 @@ namespace TinyHttp {
 		/// <param name="Response">The response.</param>
 		public static Stream AsUncompressed(this HttpWebResponse Response) {
 			// Check if the response is invalid.
-			if (Response == null) {
+			if (Response == null || Response.ContentLength < 0) {
 				// Return null.
 				return null;
 			}
