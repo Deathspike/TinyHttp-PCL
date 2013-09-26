@@ -22,7 +22,7 @@ namespace TinyHttp {
 		/// <param name="Response">The response.</param>
 		public static byte[] AsBinary(this HttpWebResponse Response) {
 			// Check if the response is invalid.
-			if (Response == null || Response.ContentLength < 0) {
+			if (Response == null) {
 				// Return null.
 				return null;
 			}
@@ -30,8 +30,10 @@ namespace TinyHttp {
 			using (Stream Stream = Response.AsUncompressed()) {
 				// Initialize a new instance of the StreamReader class.
 				using (BinaryReader BinaryReader = new BinaryReader(Stream)) {
-					// Invoke the handler indicating the request is completed.
-					return BinaryReader.ReadBytes((int) Response.ContentLength);
+					// Initialize the buffer.
+					byte[] Buffer = BinaryReader.ReadBytes(int.MaxValue);
+					// Return the buffer.
+					return Buffer.Length == 0 ? null : Buffer;
 				}
 			}
 		}
@@ -42,7 +44,7 @@ namespace TinyHttp {
 		/// <param name="Response">The response.</param>
 		public static string AsString(this HttpWebResponse Response) {
 			// Check if the response is invalid.
-			if (Response == null || Response.ContentLength < 0) {
+			if (Response == null) {
 				// Return null.
 				return null;
 			}
@@ -85,7 +87,7 @@ namespace TinyHttp {
 		/// <param name="Response">The response.</param>
 		public static Stream AsUncompressed(this HttpWebResponse Response) {
 			// Check if the response is invalid.
-			if (Response == null || Response.ContentLength < 0) {
+			if (Response == null) {
 				// Return null.
 				return null;
 			}
